@@ -1,3 +1,4 @@
+import express from "express";
 import { initBot } from "./bot.js";
 import { ExtractNumber } from "./lib/extract-number.js";
 import { FAQLoad } from "./lib/faq-load.js";
@@ -16,3 +17,14 @@ async function startProject() {
   }
 }
 startProject();
+
+const app = express();
+const port = process.env.PORT || 10000;
+
+app.get("/", (req, res) => {
+  res.send("Bot working!");
+});
+
+app.listen(port, "0.0.0.0", () => {
+  console.log(`HTTP server is running on the port ${port}`);
+});
