@@ -9,7 +9,7 @@ export async function registerHandler(ctx, next) {
   await ctx.replyWithChatAction("typing");
 
   if (ctx.session.waitingForName) {
-    const nameRegex = /^[а-яА-ЯёЁa-zA-Z\-]+\s+[а-яА-ЯёЁa-zA-Z\-]+/;
+    const nameRegex = /^[а-яА-ЯёЁa-zA-Z\-]+\s+[а-яА-ЯёЁa-zA-Z\-]+$/;
 
     if (!nameRegex.test(userQuestion) || userQuestion.length < 5) {
       return await ctx.reply(
@@ -25,10 +25,20 @@ export async function registerHandler(ctx, next) {
 
   if (ctx.session.waitingForPhone) {
     const cleanPhone = userQuestion.replace(/[\s\-\(\)]/g, "");
+    let normalizedPhone = cleanPhone;
+
+    if (normalizedPhone.startsWith("0")) {
+      normalizedPhone = "+996" + normalizedPhone.slice(1);
+    } else if (normalizedPhone.startsWith("996")) {
+      normalizedPhone = "+" + normalizedPhone;
+    } else if (/^\d{9}$/.test(normalizedPhone)) {
+      normalizedPhone = "+996" + normalizedPhone;
+    }
+
     ctx.session.userPhone = userQuestion;
     const phoneRegex = /^\+996\d{9}$/;
 
-    if (!phoneRegex.test(cleanPhone)) {
+    if (!phoneRegex.test(normalizedPhone)) {
       return await ctx.reply(
         "Некорректный номер телефона.\n" +
           "Пожалуйста, введите номер в формате: +996123456789",
