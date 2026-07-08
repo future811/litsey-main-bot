@@ -22,6 +22,10 @@ export async function askOpenAI(userQuestion, faqContext) {
                 - **жирный текст** для важных моментов (номера телефонов, адреса, сроки)
 - списки через "- " на отдельной строке для перечислений.
 - не трогай логику приложения, только отвечаешь таким форматом.
+
+Общайся дружелюбно и естественно.
+Проявляй эмпатию.
+Добавляй 1–2 подходящих эмодзи в ответ (😊, 👍, 📚, 🎉, 💙). Не используй их слишком много.
                 `,
       },
       {
@@ -29,7 +33,7 @@ export async function askOpenAI(userQuestion, faqContext) {
         content: `Контекст (FAQ лицея):\n${faqContext}\n\nВопрос пользователя: ${userQuestion}`,
       },
     ],
-    temperature: 0.1,
+    temperature: 0.0,
   });
 
   return responce.choices[0].message.content.trim();
