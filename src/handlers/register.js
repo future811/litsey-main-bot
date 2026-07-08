@@ -26,7 +26,7 @@ export async function registerHandler(ctx, next) {
   if (ctx.session.waitingForPhone) {
     const cleanPhone = userQuestion.replace(/[\s\-\(\)]/g, "");
     ctx.session.userPhone = userQuestion;
-    const phoneRegex = /^\+?[0-9]{10,15}$/;
+    const phoneRegex = /^\+996\d{9}$/;
 
     if (!phoneRegex.test(cleanPhone)) {
       return await ctx.reply(
