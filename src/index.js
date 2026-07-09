@@ -25,6 +25,14 @@ app.get("/", (req, res) => {
   res.send("Bot working!");
 });
 
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+  });
+});
+
 app.listen(port, "0.0.0.0", () => {
   console.log(`HTTP server is running on the port ${port}`);
 });
